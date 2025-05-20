@@ -1,0 +1,1 @@
+connect = "mysql://Lukas:mokslai123+@localhost/melanoma"
