@@ -50,8 +50,30 @@ def load_and_prepare_data(img_dir_yes, img_dir_no, img_size=(256, 256)):
     X_train_val, X_test, y_train_val, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     X_train, X_val, y_train, y_val = train_test_split(X_train_val, y_train_val, test_size=0.2, stratify=y_train_val, random_state=42)
 
-    class_weights = compute_class_weight('balanced', classes=np.unique(y), y=y)
+    class_weights = compute_class_weight(
+        class_weight='balanced',
+        classes=np.unique(y), 
+        y=y 
+    ) 
     class_weights_dict = {i: class_weights[i] for i in range(len(class_weights))}
 
-    return X_train / 255.0, X_val / 255.0, X_test / 255.0, y_train, y_val, y_test, class_weights_dict
+    X_train = X_train / 255.0
+    X_val = X_val / 255.0
+    X_test = X_test / 255.0
+
+    return X_train, X_val, X_test, y_train, y_val, y_test, class_weights_dict
+
+
+def Website_foto(image_path, img_size=(256, 256)):
+    image = cv2.imread(image_path)
+    if image is None:
+        raise ValueError(f"Negalima nuskaityti paveikslelio: {image_path}")
+
+    image = dull_razor(image)
+    image = cv2.resize(image, img_size)
+    image = image.astype('float32') / 255.0 
+
+    image = np.expand_dims(image, axis=0) 
+    return image
+
 
