@@ -1,12 +1,3 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_sqlalchemy import SQLAlchemy
-from config import Config
-import os
-# from main import database
-# from main.models import User_models
-# from flask_sqlalchemy import SQLAlchemy as sa
-
-
 import os
 from flask import Flask, render_template
 from config import Config

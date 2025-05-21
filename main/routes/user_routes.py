@@ -56,10 +56,7 @@ def index():
             )
             db.session.add(user)
             db.session.commit()
-
-            db.session.add(user)
-            db.session.commit()
-
+            
             message = "Greičiausiai tai yra melanoma." if prediction > 0.5 else "Greičiausiai tai nėra melanoma."
 
     return render_template(

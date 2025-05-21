@@ -7,15 +7,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.utils.class_weight import compute_class_weight
 
 
-def dull_razor(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    _, mask = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY_INV)
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
-    mask = cv2.dilate(mask, kernel, iterations=1)
-    mask = cv2.erode(mask, kernel, iterations=1)
-    result = cv2.inpaint(image, mask, inpaintRadius=1, flags=cv2.INPAINT_TELEA)
-    return result
-
 def load_and_prepare_data(img_dir_yes, img_dir_no, img_size=(256, 256)):
     """load_and_prepare_data(img_dir_yes,img_dir_no, img_size=(default 256,256))"""
     paths_yes = gb.glob(img_dir_yes)
@@ -62,6 +53,18 @@ def load_and_prepare_data(img_dir_yes, img_dir_no, img_size=(256, 256)):
     X_test = X_test / 255.0
 
     return X_train, X_val, X_test, y_train, y_val, y_test, class_weights_dict
+
+
+
+
+def dull_razor(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    _, mask = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY_INV)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
+    mask = cv2.dilate(mask, kernel, iterations=1)
+    mask = cv2.erode(mask, kernel, iterations=1)
+    result = cv2.inpaint(image, mask, inpaintRadius=1, flags=cv2.INPAINT_TELEA)
+    return result
 
 
 def Website_foto(image_path, img_size=(256, 256)):
